@@ -51,4 +51,19 @@ jobs:
           sleep 20         
           echo -e "\e[32mVALIDAR\e[0m"      
           docker logs mi-contenedor                  
-          curl http://localhost:8081/weatherForecast          
+          curl http://localhost:8081/weatherForecast        
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, Tag, and Push the Image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: sesion2tecylabjava
+          IMAGE_TAG: ${{ needs.extract-version.outputs.app_version }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker images 
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
