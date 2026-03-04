@@ -75,21 +75,42 @@ jobs:
       #     docker images 
       #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Configure ACR credentials
-        uses: azure/docker-login@v2
-        with:
-          login-server: testsesion2.azurecr.io # default: index.docker.io
-          username: ${{ secrets.AZURE_ACR_ACCESS_USER }}
-          password: ${{ secrets.AZURE_ACR_ACCESS_PASS }}  
+      # - name: Configure ACR credentials
+      #   uses: azure/docker-login@v2
+      #   with:
+      #     login-server: testsesion2.azurecr.io # default: index.docker.io
+      #     username: ${{ secrets.AZURE_ACR_ACCESS_USER }}
+      #     password: ${{ secrets.AZURE_ACR_ACCESS_PASS }}  
 
-      - name: Build & Push image
-        env:
-          ACR_REGISTRY: testsesion2.azurecr.io
-          ACR_REPOSITORY: minimalapi
-          IMAGE_TAG: ${{ needs.extract-version.outputs.app_version }}      
+      # - name: Build & Push image
+      #   env:
+      #     ACR_REGISTRY: testsesion2.azurecr.io
+      #     ACR_REPOSITORY: minimalapi
+      #     IMAGE_TAG: ${{ needs.extract-version.outputs.app_version }}      
+      #   run: |
+      #     echo -e "\e[32mBuild componente\e[0m"
+      #     docker build -t $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG .
+      #     echo -e "\e[32mPush componente\e[0m"
+      #     docker push $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG
+      #     docker images
+
+      - uses: 'google-github-actions/auth@v3'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}' # Replace with the name of your GitHub Actions secret
+      - name: Configure Docker Client
+        run: |
+          gcloud auth configure-docker us-east1-docker.pkg.dev --quiet
+      - name: Push Docker Image to Artifact Registry
+        env:          
+          AR_REGISTRY: us-east1-docker.pkg.dev
+          AR_REPOSITORY: sesion2tecylabjava
+          PROJECT_ID: credenciales-364703
+          IMAGE_NAME: sesion2tecylabjava
+          IMAGE_TAG: ${{ needs.extract-version.outputs.app_version }} 
         run: |
           echo -e "\e[32mBuild componente\e[0m"
-          docker build -t $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG .
-          echo -e "\e[32mPush componente\e[0m"
-          docker push $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG
+          docker build -t $AR_REGISTRY/$AR_REPOSITORY:$IMAGE_TAG .                  
+          docker tag $AR_REGISTRY/$AR_REPOSITORY:$IMAGE_TAG us-east1-docker.pkg.dev/$PROJECT_ID/testtecylab/$IMAGE_NAME:$IMAGE_TAG
+          docker images
+          docker push us-east1-docker.pkg.dev/$PROJECT_ID/testtecylab/$IMAGE_NAME:$IMAGE_TAG
           docker images
