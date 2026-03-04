@@ -41,4 +41,10 @@ jobs:
           echo -e "\e[32mdocker ps\e[0m"
           docker ps
           echo -e "\e[32mdocker ps -a\e[0m"
-          docker ps -a     
+          docker ps -a  
+          echo -e "\e[32mdocker run -a\e[0m"
+          docker run -d --name mi-contenedor -p 8081:8081 -e SERVER_ADDRESS=0.0.0.0 mi-app:1.0  
+          echo -e "\e[32mdocker ps II\e[0m"
+          docker ps
+          echo -e "\e[32mdocker ps -a II\e[0m"
+          docker ps -a            
