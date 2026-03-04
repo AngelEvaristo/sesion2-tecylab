@@ -1,0 +1,84 @@
+## Build results
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.vspscc
+*.vssscc
+*.dbmdl
+
+## Visual Studio
+.vs/
+.vscode/
+*.code-workspace
+
+## Rider
+.idea/
+*.sln.iml
+
+## ASP.NET
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+appsettings.*.json.local
+
+## Entity Framework
+Migrations/
+
+## dotnet CLI
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Paket
+.paket/
+paket-files/
+
+## Resharper
+_ReSharper*/
+*.DotSettings.user
+
+## Test Results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+## Sonar
+.sonar/
+.scannerwork/
+sonarqube.out
+
+## Logs
+*.log
+
+## Secrets
+secrets.json
+.env
+.env.*
+
+## Other
+*.ncrunch*
+*.localhistory
+*.swp
+*.bak
+*.tmp
+*.orig
+*.rej
+*.cache
+
+# Node (por si hay SPA o Blazor WASM)
+node_modules/
+dist/
+
+# IDE-specific
+.DS_Store
+Thumbs.db
