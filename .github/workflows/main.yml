@@ -37,4 +37,8 @@ jobs:
         run: |
           echo -e "\e[32mDocker build\e[0m"
           docker build -t mi-app:1.0 .           
-          docker images        
+          docker images   
+          echo -e "\e[32mdocker ps\e[0m"
+          docker ps
+          echo -e "\e[32mdocker ps -a\e[0m"
+          docker ps -a     
