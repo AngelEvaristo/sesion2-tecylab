@@ -47,4 +47,8 @@ jobs:
           echo -e "\e[32mdocker ps II\e[0m"
           docker ps
           echo -e "\e[32mdocker ps -a II\e[0m"
-          docker ps -a            
+          docker ps -a   
+          sleep 20         
+          echo -e "\e[32mVALIDAR\e[0m"      
+          docker logs mi-contenedor                  
+          curl http://localhost:8081/weatherForecast          
