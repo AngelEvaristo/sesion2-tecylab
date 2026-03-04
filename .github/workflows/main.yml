@@ -1,0 +1,40 @@
+---
+name: Build and Push Image JAVA
+on:
+#   push:
+#     branches: [ main ]
+  workflow_dispatch: {}
+jobs:
+
+  extract-version:
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get version from changelog
+        id: get_version
+        run: |
+          VERSION=$(grep -m1 -oP '(?<=## \[)[0-9]+\.[0-9]+\.[0-9]+' CHANGELOG.md)
+          echo "Version found: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  build-and-push:
+    name: Build and Push to ECR
+    runs-on: ubuntu-latest
+    needs: extract-version
+    steps:
+      - name: Print version from previous job
+        run: |
+          echo "Version is: ${{ needs.extract-version.outputs.app_version }}"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Validate Docker Build and Run Locally
+        run: |
+          echo -e "\e[32mDocker build\e[0m"
+          docker build -t mi-app:1.0 .           
+          docker images        
