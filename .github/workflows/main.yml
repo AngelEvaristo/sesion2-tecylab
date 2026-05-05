@@ -54,6 +54,19 @@ jobs:
           sleep 20         
           echo -e "\e[32mVALIDAR\e[0m"      
           docker logs mi-contenedor     
-          curl http://localhost:8080             
-          curl http://localhost:8080/weatherForecast        
+          curl http://localhost:8080  
+          echo -e "\e[32mSTOP\e[0m"            
+          docker stop mi-contenedor 
+          echo -e "\e[32mdocker ps III\e[0m"
+          docker ps
+          echo -e "\e[32mdocker ps -a III\e[0m"
+          docker ps -a           
+          echo -e "\e[32mDELETECONTENEDOR\e[0m"            
+          docker rm mi-contenedor
+          echo -e "\e[32mDELETEIMAGE\e[0m"            
+          docker rmi mi-app:1.0   
+          echo -e "\e[32mdocker ps IIII\e[0m"
+          docker ps
+          echo -e "\e[32mdocker ps -a IIII\e[0m"
+          docker ps -a               
 
