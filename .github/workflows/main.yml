@@ -62,6 +62,7 @@ jobs:
           trap 'docker compose down' EXIT
           docker compose up -d --build
           docker compose ps
+          docker images
           sleep 20
           echo -e "\e[32mVALIDAR\e[0m"
           docker compose logs app
