@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mi-app:${APP_VERSION:-1.0}
+    ports:
+      - "8081:8081"
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
